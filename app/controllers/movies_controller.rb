@@ -7,7 +7,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    # Controller action that sets up @all_ratings. Asks Movie model to return all movies with these ratings.
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
     
@@ -19,6 +18,14 @@ class MoviesController < ApplicationController
       end
       @movies = Movie.with_ratings(@ratings_to_show)
     end
+    
+    if params[:click] == 'Movie Title'
+      @movies = @movies.order(:title)
+      @click = params[:click]
+    elsif params[:click] == 'Release Date'
+      @movies = @movies.order(:release_date)
+      @click = params[:click]
+    end 
   end
 
   def new

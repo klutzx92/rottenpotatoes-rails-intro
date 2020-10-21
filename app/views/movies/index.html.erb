@@ -2,6 +2,7 @@
 <h2>All Movies</h2>
 
 <%#  Part 1: Start here... %>
+<%# Check if the ratings[#{rating}] is correct. %>
 
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
   Include:
@@ -20,9 +21,17 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th>
+        <div class="<%= @click == 'Movie Title' ? 'hilite bg-warning' : 'hilite' %>">
+          <%= link_to "Movie Title", movies_path({:click => 'Movie Title', :ratings => Hash[@ratings_to_show.collect { |item| [item, "1"] } ]}), id: 'title_header' %>
+        </div>
+      </th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th>
+        <div class="<%= @click == 'Release Date' ? 'hilite bg-warning' : 'hilite' %>">
+          <%= link_to "Release Date", movies_path({:click => 'Release Date', :ratings => Hash[@ratings_to_show.collect { |item| [item, "1"] } ]}), id: 'release_date_header' %>
+        </div>
+      </th>
       <th>More Info</th>
     </tr>
   </thead>
@@ -36,7 +45,7 @@
           <%= movie.rating %>
         </td>
         <td>
-          <%= movie.release_date %>
+          <%= movie.release_date %> 
         </td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>
