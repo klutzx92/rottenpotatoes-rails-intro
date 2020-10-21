@@ -7,7 +7,18 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    # Controller action that sets up @all_ratings. Asks Movie model to return all movies with these ratings.
+    @all_ratings = Movie.all_ratings
+    @ratings_to_show = []
+    
+    if params[:ratings] == nil
+      @movies = Movie.all
+    else
+      params[:ratings].keys.each do |r|
+        @ratings_to_show.append(r)
+      end
+      @movies = Movie.with_ratings(@ratings_to_show)
+    end
   end
 
   def new
