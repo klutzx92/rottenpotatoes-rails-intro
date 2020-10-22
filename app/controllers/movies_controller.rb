@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
         @ratings_to_show = session[:ratings].keys
         checked = true
       else
-        @ratings_to_show = []
+        @ratings_to_show = [] 
       end
     end
     
