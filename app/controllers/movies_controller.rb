@@ -7,23 +7,52 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    redirect = false
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
     
     checked = false
+    
+    #checkboxes
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
       checked = true
+      redirect = true
+      session[:ratings] = params[:ratings]
+    else
+      if session[:ratings] 
+        @ratings_to_show = session[:ratings].keys
+        checked = true
+      else
+        @ratings_to_show = []
+      end
     end
     
-    @click = params[:click]
+    #header clicks
+    if params[:click]
+      @click = params[:click]
+      session[:click] = @click
+    else
+      if session[:click]
+        @click = session[:click]
+      end
+    end
+      
     if @click == 'Movie Title'
       sort_by = :title
+      redirect = true
     elsif @click == 'Release Date'
       sort_by = :release_date
+      redirect = true
+    end
+    
+    if not redirect
+      redirect_to movies_path
     end
     
     if checked
+      #byebug
       @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
     else
       @movies = Movie.all.order(sort_by)
