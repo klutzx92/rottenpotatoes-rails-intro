@@ -10,24 +10,31 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
     
-    if params[:ratings] == nil
-      @movies = Movie.all
-    else
-      params[:ratings].keys.each do |r|
-        @ratings_to_show.append(r)
-      end
-      @movies = Movie.with_ratings(@ratings_to_show)
+    checked = false
+    if params[:ratings]
+      @ratings_to_show = params[:ratings].keys
+      checked = true
     end
     
-    if params[:click] == 'Movie Title'
-      @movies = @movies.order(:title)
-      @click = params[:click]
-    elsif params[:click] == 'Release Date'
-      @movies = @movies.order(:release_date)
-      @click = params[:click]
-    end 
+    @click = params[:click]
+    if @click == 'Movie Title'
+      sort_by = :title
+    elsif @click == 'Release Date'
+      sort_by = :release_date
+    end
+    
+    if checked
+      @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
+    else
+      @movies = Movie.all.order(sort_by)
+    end
   end
 
+  
+  
+  
+  
+  
   def new
     # default: render 'new' template
   end
