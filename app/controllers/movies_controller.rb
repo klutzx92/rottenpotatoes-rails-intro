@@ -56,7 +56,7 @@ class MoviesController < ApplicationController
     end
     
     if redirect
-      redirect_to movies_path({:rating => @ratings_to_show, :click => session[:click]})
+      redirect_to movies_path({:rating => @ratings_to_show, :click => @click})
     else
       if checked
         @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
