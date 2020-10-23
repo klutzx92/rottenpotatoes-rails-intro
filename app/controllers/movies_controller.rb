@@ -7,6 +7,9 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    #session.clear
+    
     redirect = false
     @all_ratings = Movie.all_ratings
     @ratings_to_show = @all_ratings
@@ -23,6 +26,7 @@ class MoviesController < ApplicationController
       if session[:ratings] 
         @ratings_to_show = session[:ratings].keys
         checked = true
+        #redirect = true ###
       else
         @ratings_to_show = @all_ratings
       end
