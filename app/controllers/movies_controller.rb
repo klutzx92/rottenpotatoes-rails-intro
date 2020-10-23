@@ -7,11 +7,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    
-    #session.clear
-    #start
-    # byebug
-    @movies = Movie.all
     redirect = false
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
@@ -20,7 +15,7 @@ class MoviesController < ApplicationController
     checked = false
     
     #checkboxes
-    if params[:ratings] # either you unchecked, or came from somewhere else.
+    if params[:ratings]
       @ratings_to_show = params[:ratings].keys
       checked = true
       session[:ratings] = params[:ratings]
@@ -50,12 +45,9 @@ class MoviesController < ApplicationController
       sort_by = :release_date
     end
     
-    
     if from_within and params[:ratings] == nil
       session.delete(:ratings)
     end
-    
-    #byebug
     
     if redirect
       redirect_to movies_path({:rating => session[:rating], :click => session[:click]})
@@ -67,11 +59,6 @@ class MoviesController < ApplicationController
       end
     end
   end
-
-  
-  
-  
-  
   
   def new
     # default: render 'new' template
