@@ -49,7 +49,7 @@ class MoviesController < ApplicationController
       session.delete(:ratings)
     end
     
-    if redirect or (params[:rating] == nil and params[:click] == nil)
+    if redirect
       redirect_to movies_path({:rating => session[:rating], :click => session[:click]})
     else
       if checked
