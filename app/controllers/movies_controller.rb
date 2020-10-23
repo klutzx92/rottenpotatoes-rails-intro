@@ -8,14 +8,19 @@ class MoviesController < ApplicationController
 
   def index
     
+    @movies = Movie.all
     redirect = false
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
     
+    from_within = false
+    from_within = params[:home] ? true : false
+      
+    
     checked = false
     
     #checkboxes
-    if params[:ratings]
+    if params[:ratings] # either you unchecked, or came from somewhere else.
       @ratings_to_show = params[:ratings].keys
       checked = true
       redirect = true
@@ -25,7 +30,7 @@ class MoviesController < ApplicationController
         @ratings_to_show = session[:ratings].keys
         checked = true
       else
-        @ratings_to_show = [] 
+        @ratings_to_show = []
       end
     end
     
@@ -49,13 +54,13 @@ class MoviesController < ApplicationController
     
     if not redirect
       redirect_to movies_path
-    end
-    
-    if checked
-      #byebug
-      @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
     else
-      @movies = Movie.all.order(sort_by)
+      if checked
+        #byebug
+        @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
+      else
+        @movies = Movie.all.order(sort_by)
+      end
     end
   end
 

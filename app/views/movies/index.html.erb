@@ -4,7 +4,7 @@
 <%#  Part 1: Start here... %>
 <%# Check if the ratings[#{rating}] is correct. %>
 
-<%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
+<%= form_tag movies_path({:home => 1}), method: :get, id: 'ratings_form' do %>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
