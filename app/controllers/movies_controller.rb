@@ -9,7 +9,7 @@ class MoviesController < ApplicationController
   def index
     redirect = false
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = []
+    @ratings_to_show = @all_ratings
     
     from_within = params[:commit] == 'Refresh' ? true : false
     checked = false
@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
         @ratings_to_show = session[:ratings].keys
         checked = true
       else
-        @ratings_to_show = []
+        @ratings_to_show = @all_ratings
       end
     end
     

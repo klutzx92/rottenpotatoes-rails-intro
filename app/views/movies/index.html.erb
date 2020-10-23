@@ -22,16 +22,12 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>
-        <div class="<%= @click == 'Movie Title' ? 'hilite bg-warning' : 'hilite' %>">
+      <th class="<%= @click == 'Movie Title' ? 'hilite bg-warning' : 'hilite' %>">
           <%= link_to "Movie Title", movies_path({:home => "1", :click => 'Movie Title', :ratings => Hash[@ratings_to_show.collect { |item| [item, "1"] } ]}), id: 'title_header' %>
-        </div>
       </th>
       <th>Rating</th>
-      <th>
-        <div class="<%= @click == 'Release Date' ? 'hilite bg-warning' : 'hilite' %>">
+      <th class="<%= @click == 'Release Date' ? 'hilite bg-warning' : 'hilite' %>">
           <%= link_to "Release Date", movies_path({:home => "1", :click => 'Release Date', :ratings => Hash[@ratings_to_show.collect { |item| [item, "1"] } ]}), id: 'release_date_header' %>
-        </div>
       </th>
       <th>More Info</th>
     </tr>
@@ -39,18 +35,10 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td>
-          <%= movie.title %>
-        </td>
-        <td>
-          <%= movie.rating %>
-        </td>
-        <td>
-          <%= movie.release_date %> 
-        </td>
-        <td>
-          <%= link_to "More about #{movie.title}", movie_path(movie) %>
-        </td>
+        <td><%= movie.title %></td>
+        <td><%= movie.rating %></td>
+        <td><%= movie.release_date %></td>
+        <td><%= link_to "More about #{movie.title}", movie_path(movie) %></td>
       </tr>
     <% end %>
   </tbody>
