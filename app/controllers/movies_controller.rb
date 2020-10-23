@@ -19,14 +19,16 @@ class MoviesController < ApplicationController
     
     #checkboxes
     if params[:ratings]
-      @ratings_to_show = params[:ratings].keys
+      param_keys = params[:ratings].keys
+      @ratings_to_show = param_keys
       checked = true
-      session[:ratings] = params[:ratings]
+      session[:ratings] = @ratings_to_show
     else
       if session[:ratings] 
-        @ratings_to_show = session[:ratings].keys
+        @ratings_to_show = session[:ratings]
         checked = true
-        #redirect = true ###
+        # redirect = true ###
+        #session.delete(:ratings)
       else
         @ratings_to_show = @all_ratings
       end
@@ -54,7 +56,7 @@ class MoviesController < ApplicationController
     end
     
     if redirect
-      redirect_to movies_path({:rating => session[:rating], :click => session[:click]})
+      redirect_to movies_path({:rating => @ratings_to_show, :click => session[:click]})
     else
       if checked
         @movies = Movie.with_ratings(@ratings_to_show).order(sort_by)
