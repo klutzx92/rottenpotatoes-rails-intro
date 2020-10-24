@@ -27,8 +27,6 @@ class MoviesController < ApplicationController
       if session[:ratings] 
         @ratings_to_show = session[:ratings]
         checked = true
-        # redirect = true ###
-        #session.delete(:ratings)
       else
         @ratings_to_show = @all_ratings
       end
